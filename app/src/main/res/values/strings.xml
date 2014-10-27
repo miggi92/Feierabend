@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Home time</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="button">When can I go home?</string>
+    <string name="sugg_arrv">08:00</string>
+    <string name="sugg_ht">17:00</string>
+    <string name="lb_arrv">Arrivaltime</string>
+    <string name="lb_ht">Home time</string>
+
+</resources>

@@ -1,0 +1,11 @@
+<resources>
+
+    <string name="action_settings">Einstellungen</string>
+    <string name="app_name">Feierabend</string>
+    <string name="button">Wann kann ich gehen?</string>
+    <string name="lb_arrv">Ankunftszeit</string>
+    <string name="lb_ht">Feierabend</string>
+    <string name="sugg_arrv">08:00</string>
+    <string name="sugg_ht">17:00</string>
+
+</resources>
