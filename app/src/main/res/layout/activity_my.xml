@@ -93,4 +93,14 @@
         android:layout_marginBottom="136dp"
         android:enabled="false" />
 
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/next_day"
+        android:id="@+id/next_day"
+        android:layout_below="@+id/lb_ht"
+        android:layout_alignRight="@+id/home_time"
+        android:layout_alignEnd="@+id/home_time"
+        android:enabled="false" />
+
 </RelativeLayout>

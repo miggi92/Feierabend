@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import java.util.Calendar;
@@ -21,6 +22,7 @@ public class MyActivity extends Activity {
     private EditText pause_time;
     private Button button;
     private int work_time;
+    private CheckBox next_day;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class MyActivity extends Activity {
         home_time = (EditText) findViewById(R.id.home_time);
         pause_time = (EditText)findViewById(R.id.pause_time);
         button = (Button) findViewById(R.id.button);
+        next_day = (CheckBox) findViewById(R.id.next_day);
 
         button.setText(R.string.button);
 
@@ -68,11 +71,13 @@ public class MyActivity extends Activity {
                 String pause;
                 int time;
                 int hour;
+                int hour2;
                 int min;
                 int pt;
                 String arrival;
                 String s1;
                 String s2;
+                boolean nd;
 
                 Calendar c = Calendar.getInstance();
                 int day = c.get(Calendar.DAY_OF_WEEK);
@@ -99,26 +104,34 @@ public class MyActivity extends Activity {
                 }
                 pause = pause.replace(":", "");
                 pt = Integer.parseInt(pause);
-                if (time < 1700)
-                {
-                    time = time + pt + work_time;
-                }
-                else {
-                    //TODO: Abfangen dass er über die 24h schreibt.
-                    time = 0000;
-                }
+                //Zeit berechnen
+                time = time + pt + work_time;
+
                 arrival = String.valueOf(time);
                 s1 = arrival.substring(0,2);
                 s2 = arrival.substring(2,4);
                 hour = Integer.parseInt(s1);
                 min = Integer.parseInt(s2);
+
+                nd = false;
                 //Uhrzeiten richtig anzeigen
                 while(min >= 60){
                     hour = hour + 1;
                     min = min - 60;
                 }
+                while(hour >= 24) {
+                    hour2 = + 1;
+                    hour = hour - 1;
+                    if (hour == 24){
+                        hour = 0;
+                        nd = true;
+                    }
+                }
+
+                    next_day.setChecked(nd);
+
                 s2 = convert(min, 2); //fügt eine 0 hinzu, damit die Minuten immer 2 Stellen haben
-                s1 = String.valueOf(hour);
+                s1 = convert(hour, 2);
                 arrival = s1 + ":" + s2;
                 home_time.setText(arrival);
             }

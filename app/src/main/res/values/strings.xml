@@ -10,5 +10,6 @@
     <string name="lb_arrv">Arrivaltime</string>
     <string name="lb_ht">Home time</string>
     <string name="lb_pt">Pause</string>
+    <string name="next_day">Next Day?</string>
 
 </resources>

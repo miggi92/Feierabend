@@ -30,7 +30,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="25dp" />
+        android:layout_marginTop="25dp"
+        android:layout_alignLeft="@+id/pause_time"
+        android:layout_alignStart="@+id/pause_time" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -40,9 +42,9 @@
         android:hint="@string/sugg_pause"
         android:id="@+id/pause_time"
         android:layout_below="@+id/arrv_time"
-        android:layout_alignLeft="@+id/arrv_time"
-        android:layout_alignStart="@+id/arrv_time"
-        android:layout_marginTop="23dp" />
+        android:layout_marginTop="23dp"
+        android:layout_toRightOf="@+id/button"
+        android:layout_toEndOf="@+id/button" />
 
     <Button
         android:layout_width="wrap_content"
@@ -87,5 +89,15 @@
         android:layout_alignLeft="@+id/arrv_time"
         android:layout_alignStart="@+id/arrv_time"
         android:layout_marginBottom="136dp" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/next_day"
+        android:id="@+id/next_day"
+        android:layout_below="@+id/lb_ht"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:enabled="false" />
 
 </RelativeLayout>
