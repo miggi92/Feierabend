@@ -30,7 +30,10 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="25dp" />
+        android:layout_marginTop="25dp"
+        android:layout_toRightOf="@+id/button"
+        android:layout_toEndOf="@+id/button"
+        android:editable="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -42,7 +45,8 @@
         android:layout_below="@+id/arrv_time"
         android:layout_alignLeft="@+id/arrv_time"
         android:layout_alignStart="@+id/arrv_time"
-        android:layout_marginTop="23dp" />
+        android:layout_marginTop="23dp"
+        android:editable="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -86,6 +90,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/arrv_time"
         android:layout_alignStart="@+id/arrv_time"
-        android:layout_marginBottom="136dp" />
+        android:layout_marginBottom="136dp"
+        android:enabled="false" />
 
 </RelativeLayout>
