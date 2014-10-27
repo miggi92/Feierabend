@@ -14,7 +14,10 @@ import android.widget.EditText;
 public class MyActivity extends Activity {
     private EditText arrv_time;
     private EditText home_time;
+    private EditText pause_time;
     private Button button;
+    private int work_time;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +25,7 @@ public class MyActivity extends Activity {
 
         arrv_time = (EditText) findViewById(R.id.arrv_time);
         home_time = (EditText) findViewById(R.id.home_time);
+        pause_time = (EditText)findViewById(R.id.pause_time);
         button = (Button) findViewById(R.id.button);
 
         button.setText(R.string.button);
@@ -45,33 +49,43 @@ public class MyActivity extends Activity {
 
         button.setEnabled(false);
 
+
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Editable arrival;
+
+                String pause;
                 int time;
-                String arrv;
+                int pt;
+                String arrival;
                 String s1;
                 String s2;
 
                 //TODO: Freitag mit einberechnen.
-                arrival = arrv_time.getText();
-                arrv = arrival.toString();
-                arrv = arrv.replace(":", "");
-                time = Integer.parseInt(arrv);
-                if (time < 1800)
+                work_time = 800;
+                arrival = arrv_time.getText().toString();
+                arrival = arrival.replace(":", "");
+                time = Integer.parseInt(arrival);
+                pause = pause_time.getText().toString();
+                if(pause.matches("")){
+                    pause = "01:00";
+                }
+                pause = pause.replace(":", "");
+                pt = Integer.parseInt(pause);
+                if (time < 1700)
                 {
-                    time = time + 900;
+                    time = time + pt + work_time;
                 }
                 else {
                     //TODO: Abfangen dass er über die 24h schreibt.
                     time = 0000;
                 }
-                arrv = String.valueOf(time);
-                s1 = arrv.substring(0,2);
-                s2 = arrv.substring(2,4);
-                arrv = s1 + ":" + s2;
-                home_time.setText(arrv);
+                arrival = String.valueOf(time);
+                s1 = arrival.substring(0,2);
+                s2 = arrival.substring(2,4);
+                arrival = s1 + ":" + s2;
+                home_time.setText(arrival);
             }
         });
 
