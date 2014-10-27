@@ -128,7 +128,7 @@ public class MyActivity extends Activity {
                     }
                 }
 
-                    next_day.setChecked(nd);
+                next_day.setChecked(nd);
 
                 s2 = convert(min, 2); //fügt eine 0 hinzu, damit die Minuten immer 2 Stellen haben
                 s1 = convert(hour, 2);
