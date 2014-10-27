@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string name="action_settings">Einstellungen</string>
@@ -6,6 +7,8 @@
     <string name="lb_arrv">Ankunftszeit</string>
     <string name="lb_ht">Feierabend</string>
     <string name="sugg_arrv">08:00</string>
+    <string name="sugg_pause">01:00</string>
     <string name="sugg_ht">17:00</string>
+    <string name="lb_pt">Pause</string>
 
 </resources>
