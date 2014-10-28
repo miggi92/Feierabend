@@ -30,8 +30,8 @@ public class MyActivity extends Activity {
         setContentView(R.layout.activity_my);
 
         arrv_time = (EditText) findViewById(R.id.arrv_time);
-        home_time = (EditText) findViewById(R.id.home_time);
         pause_time = (EditText)findViewById(R.id.pause_time);
+        home_time = (EditText)findViewById(R.id.home_time);
         button = (Button) findViewById(R.id.button);
         next_day = (CheckBox) findViewById(R.id.next_day);
 
