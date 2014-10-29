@@ -1,0 +1,15 @@
+<resources>
+
+    <string name="action_settings">Preferencias</string>
+    <string name="app_name">fin del trabajo</string>
+    <string name="button">¿Cuándo puedo ir a casa?</string>
+    <string name="lb_arrv">Hora de llegada</string>
+    <string name="lb_ht">Hora para ir a casa</string>
+    <string name="lb_pt">pausa</string>
+    <string name="lv_left">tiempo para ir</string>
+    <string name="next_day">¿Próximo dia?</string>
+    <string name="sugg_arrv">08:00</string>
+    <string name="sugg_ht">17:00</string>
+    <string name="sugg_pause">01:00</string>
+
+</resources>
