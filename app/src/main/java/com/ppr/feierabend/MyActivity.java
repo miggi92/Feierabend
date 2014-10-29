@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import java.sql.Time;
 import java.util.Calendar;
 
 
@@ -89,10 +90,7 @@ public class MyActivity extends Activity {
                 int day = c.get(Calendar.DAY_OF_WEEK);
 
                 act_hour = c.get(Calendar.HOUR_OF_DAY);
-                act_hour = act_hour * 100;
                 act_min = c.get(Calendar.MINUTE);
-                act_time = act_hour + act_min;
-
 
 
                 //Freitags Arbeitszeit ermitteln
@@ -130,25 +128,39 @@ public class MyActivity extends Activity {
                 }
                 //Zeit berechnen
                 time = time + pt + work_time;
-                act_time = time - act_time;
 
                 arrival = String.valueOf(time);
-                time_lft = String.valueOf(act_time);
 
                 int length = arrival.length();
                 int half = length / 2;
 
-                int length_t = time_lft.length();
-                int half_t = length_t / 2;
-
                 s1 = arrival.substring(0, half);
                 s2 = arrival.substring(half, length);
 
-                String t1 = time_lft.substring(0, half_t);
-                String t2 = time_lft.substring(half_t, length_t);
-
                 hour = Integer.parseInt(s1);
                 min = Integer.parseInt(s2);
+
+                if(min == 0){
+                    min = 60;
+                    hour = hour - 1;
+                }
+
+             //   if(min == 60){
+                    act_min = min - act_min;
+           //     }
+
+                act_hour = hour - act_hour + 1;
+                act_hour = act_hour * 100;
+
+                act_time = act_hour + act_min;
+
+                time_lft = String.valueOf(act_time);
+
+                int length_t = time_lft.length();
+                int half_t = length_t / 2;
+
+                String t1 = time_lft.substring(0, half_t);
+                String t2 = time_lft.substring(half_t, length_t);
 
                 act_hour = Integer.parseInt(t1);
                 act_min = Integer.parseInt(t2);
@@ -164,6 +176,20 @@ public class MyActivity extends Activity {
                     hour = hour - 1;
                     if (hour == 24){
                         hour = 0;
+                        nd = true;
+                    }
+                }
+                hour2 = 0;
+                // Time LEft richtig anzeigen
+                while(act_min >= 60){
+                    act_hour = act_hour + 1;
+                    act_min = act_min - 60;
+                }
+                while(act_hour >= 24) {
+                    hour2 = + 1;
+                    act_hour = act_hour - 1;
+                    if (act_hour == 24){
+                        act_hour = 0;
                         nd = true;
                     }
                 }
