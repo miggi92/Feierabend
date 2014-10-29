@@ -11,5 +11,6 @@
     <string name="lb_ht">Home time</string>
     <string name="lb_pt">Pause</string>
     <string name="next_day">Next Day?</string>
+    <string name="lv_left">Time Left</string>
 
 </resources>

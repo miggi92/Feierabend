@@ -23,6 +23,7 @@ public class MyActivity extends Activity {
     private Button button;
     private int work_time;
     private CheckBox next_day;
+    private EditText time_left;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class MyActivity extends Activity {
         arrv_time = (EditText) findViewById(R.id.arrv_time);
         pause_time = (EditText)findViewById(R.id.pause_time);
         home_time = (EditText)findViewById(R.id.home_time);
+        time_left = (EditText)findViewById(R.id.time_left);
         button = (Button) findViewById(R.id.button);
         next_day = (CheckBox) findViewById(R.id.next_day);
 
@@ -78,9 +80,20 @@ public class MyActivity extends Activity {
                 String s1;
                 String s2;
                 boolean nd;
+                int act_time;
+                int act_hour;
+                int act_min;
+                String time_lft;
 
                 Calendar c = Calendar.getInstance();
                 int day = c.get(Calendar.DAY_OF_WEEK);
+
+                act_hour = c.get(Calendar.HOUR_OF_DAY);
+                act_hour = act_hour * 100;
+                act_min = c.get(Calendar.MINUTE);
+                act_time = act_hour + act_min;
+
+
 
                 //Freitags Arbeitszeit ermitteln
                 if(day == 6){
@@ -93,25 +106,52 @@ public class MyActivity extends Activity {
                 arrival = arrv_time.getText().toString();
                 arrival = arrival.replace(":", "");
                 time = Integer.parseInt(arrival);
+                if(arrival.length()<= 2) {
+                    if (time < 100) {
+                        time = time * 100;
+                    }
+                }
                 pause = pause_time.getText().toString();
+
                 if(pause.matches("")){
                     if(day == 6) {
-                        pause = "01:00";
+                        pause = "00:30";
                     }
                     else {
-                        pause = "00:30";
+                        pause = "01:00";
                     }
                 }
                 pause = pause.replace(":", "");
                 pt = Integer.parseInt(pause);
+                if(pause.length()<= 2) {
+                    if (pt < 100) {
+                        pt = pt * 100;
+                    }
+                }
                 //Zeit berechnen
                 time = time + pt + work_time;
+                act_time = time - act_time;
 
                 arrival = String.valueOf(time);
-                s1 = arrival.substring(0,2);
-                s2 = arrival.substring(2,4);
+                time_lft = String.valueOf(act_time);
+
+                int length = arrival.length();
+                int half = length / 2;
+
+                int length_t = time_lft.length();
+                int half_t = length_t / 2;
+
+                s1 = arrival.substring(0, half);
+                s2 = arrival.substring(half, length);
+
+                String t1 = time_lft.substring(0, half_t);
+                String t2 = time_lft.substring(half_t, length_t);
+
                 hour = Integer.parseInt(s1);
                 min = Integer.parseInt(s2);
+
+                act_hour = Integer.parseInt(t1);
+                act_min = Integer.parseInt(t2);
 
                 nd = false;
                 //Uhrzeiten richtig anzeigen
@@ -130,10 +170,19 @@ public class MyActivity extends Activity {
 
                 next_day.setChecked(nd);
 
+
+                time_lft = String.valueOf(act_time);
+
                 s2 = convert(min, 2); //fügt eine 0 hinzu, damit die Minuten immer 2 Stellen haben
                 s1 = convert(hour, 2);
+
+                t2 = convert(act_min, 2); //fügt eine 0 hinzu, damit die Minuten immer 2 Stellen haben
+                t1 = convert(act_hour, 2);
+
                 arrival = s1 + ":" + s2;
+                time_lft = t1 + ":" + t2;
                 home_time.setText(arrival);
+                time_left.setText(time_lft);
             }
         });
 
@@ -159,8 +208,13 @@ public class MyActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            OpenSettings();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void OpenSettings() {
+
     }
 }

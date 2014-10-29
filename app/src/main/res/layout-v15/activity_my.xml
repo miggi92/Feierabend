@@ -28,11 +28,10 @@
         android:hint="@string/sugg_arrv"
         android:id="@+id/arrv_time"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:layout_marginTop="25dp"
         android:layout_alignLeft="@+id/pause_time"
-        android:layout_alignStart="@+id/pause_time" />
+        android:layout_alignStart="@+id/pause_time"
+        android:maxLength="5" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -43,17 +42,20 @@
         android:id="@+id/pause_time"
         android:layout_below="@+id/arrv_time"
         android:layout_marginTop="23dp"
+        android:layout_toEndOf="@+id/button"
         android:layout_toRightOf="@+id/button"
-        android:layout_toEndOf="@+id/button" />
+        android:maxLength="5" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button"
         android:id="@+id/button"
-        android:layout_above="@+id/home_time"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="91dp" />
+        android:layout_toEndOf="@+id/lb_pause"
+        android:layout_below="@+id/lb_pause"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="39dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -84,11 +86,11 @@
         android:ems="10"
         android:hint="@string/sugg_ht"
         android:id="@+id/home_time"
-        android:editable="false"
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/arrv_time"
         android:layout_alignStart="@+id/arrv_time"
-        android:layout_marginBottom="136dp" />
+        android:layout_marginBottom="136dp"
+        android:enabled="@bool/False" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -98,6 +100,30 @@
         android:layout_below="@+id/lb_ht"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:enabled="false" />
+        android:enabled="@bool/False"
+        android:layout_alignLeft="@+id/home_time"
+        android:layout_alignStart="@+id/home_time" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/lv_left"
+        android:id="@+id/lb_left"
+        android:layout_above="@+id/home_time"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="time"
+        android:ems="10"
+        android:id="@+id/time_left"
+        android:layout_alignBottom="@+id/lb_left"
+        android:layout_alignLeft="@+id/home_time"
+        android:layout_alignStart="@+id/home_time"
+        android:hint="@string/sugg_arrv"
+        android:enabled="@bool/False" />
 
 </RelativeLayout>
