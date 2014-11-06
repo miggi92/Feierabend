@@ -12,5 +12,7 @@
     <string name="lb_pt">Pause</string>
     <string name="next_day">Next Day?</string>
     <string name="lv_left">Time Left</string>
+    <string name="title_activity_menu">Menu</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

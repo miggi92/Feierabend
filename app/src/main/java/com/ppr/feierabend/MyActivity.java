@@ -2,6 +2,7 @@ package com.ppr.feierabend;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -25,6 +26,7 @@ public class MyActivity extends Activity {
     private int work_time;
     private CheckBox next_day;
     private EditText time_left;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,6 +183,7 @@ public class MyActivity extends Activity {
                 }
                 hour2 = 0;
                 // Time LEft richtig anzeigen
+                act_hour = act_hour - 1;
                 while(act_min >= 60){
                     act_hour = act_hour + 1;
                     act_min = act_min - 60;
@@ -241,6 +244,7 @@ public class MyActivity extends Activity {
     }
 
     private void OpenSettings() {
-
+        Intent intent = new Intent(this, com.ppr.feierabend.Menu.class);
+        startActivity(intent);
     }
 }
