@@ -14,5 +14,6 @@
     <string name="lv_left">Time Left</string>
     <string name="title_activity_menu">Menu</string>
     <string name="hello_world">Hello world!</string>
+    <string name="lb_week_h">Change to 40h week</string>
 
 </resources>

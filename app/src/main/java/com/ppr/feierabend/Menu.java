@@ -1,16 +1,54 @@
 package com.ppr.feierabend;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.CompoundButton;
+import android.widget.ToggleButton;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 
 public class Menu extends Activity {
+
+    private String FILENAME = "week_hours.dat";
+    private String s_40 = "40";
+    private String s_38_5 = "38.5";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        CompoundButton sw_week_h = (CompoundButton) findViewById(R.id.switch1);
+        sw_week_h.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                FileOutputStream fos;
+                try {
+                    fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
+                    if(isChecked == true) {
+                        fos.write(s_40.getBytes());
+                    }
+                    else{
+                        fos.write(s_38_5.getBytes());
+                    }
+                    fos.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
     }
 
 
@@ -32,4 +70,5 @@ public class Menu extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

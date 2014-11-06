@@ -3,6 +3,8 @@ package com.ppr.feierabend;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,6 +16,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Time;
 import java.util.Calendar;
 
@@ -26,12 +32,44 @@ public class MyActivity extends Activity {
     private int work_time;
     private CheckBox next_day;
     private EditText time_left;
+    private String s_week_hours;
+    private String FILENAME = "week_hours.dat";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
+
+        FileInputStream fis;
+        Calendar c = Calendar.getInstance();
+        int day = c.get(Calendar.DAY_OF_WEEK);
+
+        try {
+            fis = openFileInput(FILENAME);
+            s_week_hours = String.valueOf(fis.read());
+            fis.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if( s_week_hours == "40"){
+            work_time = 800;
+        }
+        else{
+            if( s_week_hours == "38.5"){
+                //Freitags Arbeitszeit ermitteln
+                if(day == 6){
+                    work_time = 630;
+                }
+                else{
+                    work_time = 800;
+                }
+            }
+
+        }
 
         arrv_time = (EditText) findViewById(R.id.arrv_time);
         pause_time = (EditText)findViewById(R.id.pause_time);
@@ -95,13 +133,7 @@ public class MyActivity extends Activity {
                 act_min = c.get(Calendar.MINUTE);
 
 
-                //Freitags Arbeitszeit ermitteln
-                if(day == 6){
-                    work_time = 630;
-                }
-                else{
-                    work_time = 800;
-                }
+
 
                 arrival = arrv_time.getText().toString();
                 arrival = arrival.replace(":", "");
@@ -247,4 +279,5 @@ public class MyActivity extends Activity {
         Intent intent = new Intent(this, com.ppr.feierabend.Menu.class);
         startActivity(intent);
     }
+
 }
