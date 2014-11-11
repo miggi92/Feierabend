@@ -14,6 +14,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -31,12 +34,20 @@ public class MyActivity extends Activity {
     private int s_week_hours;
     private String FILENAME = "week_hours.txt";
 
-
+    private static final String TEST_DEVICE_ID = "TEST_EMULATOR";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /** Called when the activity is first created. */
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
 
+            // The "loadAdOnCreate" and "testDevices" XML attributes no longer available.
+            AdView adView = (AdView) this.findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder()
+                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                    .addTestDevice(TEST_DEVICE_ID)
+                    .build();
+            adView.loadAd(adRequest);
 
 
         arrv_time = (EditText) findViewById(R.id.arrv_time);
