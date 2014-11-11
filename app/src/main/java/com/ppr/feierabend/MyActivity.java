@@ -19,6 +19,7 @@ import com.google.android.gms.ads.AdView;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
 
@@ -48,7 +49,6 @@ public class MyActivity extends Activity {
                     .addTestDevice(TEST_DEVICE_ID)
                     .build();
             adView.loadAd(adRequest);
-
 
         arrv_time = (EditText) findViewById(R.id.arrv_time);
         pause_time = (EditText)findViewById(R.id.pause_time);
@@ -108,39 +108,29 @@ public class MyActivity extends Activity {
                 Calendar c = Calendar.getInstance();
                 int day = c.get(Calendar.DAY_OF_WEEK);
 
-                FileInputStream fis;
-
-                try {
-                    fis = openFileInput(FILENAME);
-                    s_week_hours = fis.read();
-                    fis.close();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                GetFileData();
+                //Falls Datei nicht vorhanden wieder eine schreiben und auslesen
+                if (s_week_hours == 0){
+                  WriteFile();
+                  GetFileData();
                 }
 
                 if( s_week_hours == 40){
                     work_time = 800;
                 }
 
-                    if( s_week_hours == 38){
-                        //Freitags Arbeitszeit ermitteln
-                        if(day == 6){
-                            work_time = 630;
-                        }
-                        else{
-                            work_time = 800;
-                        }
-
-
+                if( s_week_hours == 38){
+                    //Freitags Arbeitszeit ermitteln
+                    if(day == 6){
+                        work_time = 630;
+                    }
+                    else{
+                        work_time = 800;
+                    }
                 }
 
                 act_hour = c.get(Calendar.HOUR_OF_DAY);
                 act_min = c.get(Calendar.MINUTE);
-
-
-
 
                 arrival = arrv_time.getText().toString();
                 arrival = arrival.replace(":", "");
@@ -285,6 +275,33 @@ public class MyActivity extends Activity {
     private void OpenSettings() {
         Intent intent = new Intent(this, com.ppr.feierabend.Menu.class);
         startActivity(intent);
+    }
+    private int GetFileData(){
+        FileInputStream fis;
+
+        try {
+            fis = openFileInput(FILENAME);
+            s_week_hours = fis.read();
+            fis.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return s_week_hours;
+    }
+
+    private void WriteFile(){
+        FileOutputStream fos;
+        try {
+            fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
+            fos.write(38);
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

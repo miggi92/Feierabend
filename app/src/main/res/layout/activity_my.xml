@@ -10,135 +10,134 @@
     tools:context=".MyActivity">
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/lb_arrv"
-        android:id="@+id/lb_arrv"
-        android:layout_alignBottom="@+id/arrv_time"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:labelFor="@id/arrv_time" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/lb_arrv"
+                android:id="@+id/lb_arrv"
+                android:layout_alignBottom="@+id/arrv_time"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:labelFor="@id/arrv_time" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="time"
-        android:ems="10"
-        android:hint="@string/sugg_arrv"
-        android:id="@+id/arrv_time"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="25dp"
-        android:layout_toEndOf="@+id/button"
-        android:editable="true"
-        android:layout_toRightOf="@+id/button"
-        android:maxLength="5" />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="time"
+                android:ems="10"
+                android:hint="@string/sugg_arrv"
+                android:id="@+id/arrv_time"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="25dp"
+                android:layout_toEndOf="@+id/button"
+                android:editable="true"
+                android:layout_toRightOf="@+id/button"
+                android:maxLength="5" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/lb_pt"
-        android:id="@+id/lb_pause"
-        android:layout_alignBottom="@+id/pause_time"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:labelFor="@id/pause_time" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/lb_pt"
+                android:id="@+id/lb_pause"
+                android:layout_alignBottom="@+id/pause_time"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:labelFor="@id/pause_time" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button"
-        android:id="@+id/button"
-        android:layout_toEndOf="@+id/lb_pause"
-        android:layout_below="@+id/pause_time"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="37dp" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button"
+                android:id="@+id/button"
+                android:layout_toEndOf="@+id/lb_pause"
+                android:layout_below="@+id/pause_time"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="37dp" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="time"
-        android:ems="10"
-        android:hint="@string/sugg_pause"
-        android:id="@+id/pause_time"
-        android:layout_below="@+id/arrv_time"
-        android:layout_marginTop="23dp"
-        android:editable="true"
-        android:maxLength="5"
-        android:layout_alignLeft="@+id/arrv_time"
-        android:layout_alignStart="@+id/arrv_time" />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="time"
+                android:ems="10"
+                android:hint="@string/sugg_pause"
+                android:id="@+id/pause_time"
+                android:layout_below="@+id/arrv_time"
+                android:layout_marginTop="23dp"
+                android:editable="true"
+                android:maxLength="5"
+                android:layout_alignLeft="@+id/arrv_time"
+                android:layout_alignStart="@+id/arrv_time" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/lv_left"
-        android:id="@+id/lb_left"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/lv_left"
+                android:id="@+id/lb_left"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="time"
-        android:ems="10"
-        android:id="@+id/time_left"
-        android:layout_alignBottom="@+id/lb_left"
-        android:layout_alignLeft="@+id/home_time"
-        android:layout_alignStart="@+id/home_time"
-        android:hint="@string/sugg_arrv"
-        android:editable="@bool/False" />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="time"
+                android:ems="10"
+                android:id="@+id/time_left"
+                android:layout_alignBottom="@+id/lb_left"
+                android:layout_alignLeft="@+id/home_time"
+                android:layout_alignStart="@+id/home_time"
+                android:hint="@string/sugg_arrv"
+                android:editable="@bool/False" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/lb_ht"
-        android:id="@+id/lb_ht"
-        android:layout_alignBottom="@+id/home_time"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:labelFor="@id/home_time" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/lb_ht"
+                android:id="@+id/lb_ht"
+                android:layout_alignBottom="@+id/home_time"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:labelFor="@id/home_time" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="time"
-        android:ems="10"
-        android:hint="@string/sugg_ht"
-        android:id="@+id/home_time"
-        android:enabled="false"
-        android:editable="@bool/False"
-        android:layout_below="@+id/time_left"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignLeft="@+id/pause_time"
-        android:layout_alignStart="@+id/pause_time" />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="time"
+                android:ems="10"
+                android:hint="@string/sugg_ht"
+                android:id="@+id/home_time"
+                android:enabled="false"
+                android:editable="@bool/False"
+                android:layout_below="@+id/time_left"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignLeft="@+id/pause_time"
+                android:layout_alignStart="@+id/pause_time" />
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/next_day"
-        android:id="@+id/next_day"
-        android:layout_below="@+id/lb_ht"
-        android:layout_alignRight="@+id/home_time"
-        android:layout_alignEnd="@+id/home_time"
-        android:clickable="@bool/False" />
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/next_day"
+                android:id="@+id/next_day"
+                android:layout_below="@+id/lb_ht"
+                android:layout_alignRight="@+id/home_time"
+                android:layout_alignEnd="@+id/home_time"
+                android:clickable="@bool/False" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         ads:adSize="BANNER"
         ads:adUnitId="ca-app-pub-9924656620971762/7121096737"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/next_day"
-        android:layout_alignEnd="@+id/next_day" />
+        />
 
 </RelativeLayout>
