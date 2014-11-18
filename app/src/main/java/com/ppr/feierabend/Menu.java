@@ -1,11 +1,17 @@
 package com.ppr.feierabend;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 import static android.widget.ToggleButton.*;
 import static com.ppr.feierabend.R.id.switch1;
@@ -17,8 +23,8 @@ public class Menu extends Activity {
     private int weekHours;
     private int s_40 = 40;
     private int s_38_5 = 38;
+    private int lv_value;
     private TextView txt1;
-    CL_FILE CLFILE;
 
 
 
@@ -29,7 +35,7 @@ public class Menu extends Activity {
 
         ToggleButton sw_week_h = (ToggleButton) findViewById(switch1);
 
-        weekHours = CLFILE.GetFileData(FILENAME);
+        weekHours = GetFileData(FILENAME);
 
         if( weekHours == s_40){
             sw_week_h.setChecked(true);
@@ -43,14 +49,42 @@ public class Menu extends Activity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    CLFILE.WriteFile(s_40,FILENAME);
+                    WriteFile(s_40, FILENAME);
 
                 } else {
-                    CLFILE.WriteFile(s_38_5,FILENAME);
+                    WriteFile(s_38_5, FILENAME);
                 }
             }
         });
 
+    }
+    public int GetFileData(String FILENAME){
+        FileInputStream fis;
+
+        try {
+            fis = openFileInput(FILENAME);
+            lv_value = fis.read();
+            fis.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lv_value;
+    }
+
+    public void WriteFile(int iv_value, String FILENAME){
+        lv_value = iv_value;
+        FileOutputStream fos;
+        try {
+            fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
+            fos.write(38);
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

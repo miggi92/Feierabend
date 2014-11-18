@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -21,6 +22,10 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -34,15 +39,14 @@ public class MyActivity extends Activity {
     private int work_time;
     private CheckBox next_day;
     private EditText time_left;
+    private TextView lb_left;
     private int s_week_hours;
+    private int lv_value;
     private String FILENAME = "week_hours.txt";
-    DBAdapter myDB;
-    CL_FILE CL_FILE;
+    //TODO:implement DB
+   // DBAdapter myDB;
     // The following line should be changed to include the correct property id.
     private static final String PROPERTY_ID = "UA-56135998-1";
-    //Logging TAG
-    private static final String TAG = "MyApp";
-    public static int GENERAL_TRACKER = 0;
 
     public enum TrackerName {
         APP_TRACKER, // Tracker used only in this app.
@@ -71,13 +75,12 @@ public class MyActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
 
-        //Get a Tracker (should auto-report)
-        Tracker t;       // Get tracker.
-        t = ((MyActivity) getApplication()).getTracker(
-                TrackerName.APP_TRACKER);
-        String ACTIVITY_NAME = "MyActivity";
-        t.setScreenName(ACTIVITY_NAME);     // Pass a String representing the screen name.
-        t.send(new HitBuilders.AppViewBuilder().build());       // Send a screen view.
+        // Get tracker.
+        Tracker t = (MyActivity.this.getTracker(
+                TrackerName.APP_TRACKER));
+
+        // Enable Advertising Features.
+        t.enableAdvertisingIdCollection(true);
 
 
         // The "loadAdOnCreate" and "testDevices" XML attributes no longer available.
@@ -92,6 +95,7 @@ public class MyActivity extends Activity {
         pause_time = (EditText)findViewById(R.id.pause_time);
         home_time = (EditText)findViewById(R.id.home_time);
         time_left = (EditText)findViewById(R.id.time_left);
+        lb_left = (TextView)findViewById(R.id.lb_left);
         button = (Button) findViewById(R.id.button);
         next_day = (CheckBox) findViewById(R.id.next_day);
 
@@ -142,29 +146,29 @@ public class MyActivity extends Activity {
                 Calendar c = Calendar.getInstance();
                 int day = c.get(Calendar.DAY_OF_WEEK);
 
-                s_week_hours = CL_FILE.GetFileData(FILENAME);
+                s_week_hours = GetFileData(FILENAME);
                 //Falls Datei nicht vorhanden wieder eine schreiben und auslesen
-                if (s_week_hours == 0){
-                  CL_FILE.WriteFile(38, FILENAME);
-                  s_week_hours = CL_FILE.GetFileData(FILENAME);
-                }
 
-                if( s_week_hours == 40){
-                    work_time = 800;
-                }
-
-                if( s_week_hours == 38){
-                    //Freitags Arbeitszeit ermitteln
-                    if(day == 6){
-                        work_time = 630;
-                    }
-                    else{
-                        work_time = 800;
-                    }
+                switch (s_week_hours){
+                    case 38:
+                        //Freitags Arbeitszeit ermitteln
+                        if(day == 6){
+                            work_time = 630;
+                        }
+                        else{
+                            work_time = 800;
+                        }
+                        break;
+                    case 40: work_time = 800;
+                        break;
+                    default:WriteFile(38, FILENAME);
+                        s_week_hours = GetFileData(FILENAME);
+                        break;
                 }
 
                 act_hour = c.get(Calendar.HOUR_OF_DAY);
                 act_min = c.get(Calendar.MINUTE);
+                act_time = act_hour * 100 + act_min;
 
                 arrival = arrv_time.getText().toString();
                 arrival = arrival.replace(":", "");
@@ -193,6 +197,8 @@ public class MyActivity extends Activity {
                 }
                 //Zeit berechnen
                 time = time + pt + work_time;
+                String t1;
+                String t2;
 
                 arrival = String.valueOf(time);
 
@@ -205,80 +211,117 @@ public class MyActivity extends Activity {
                 hour = Integer.parseInt(s1);
                 min = Integer.parseInt(s2);
 
-                if(min == 0){
-                    min = 60;
-                    hour = hour - 1;
-                }
+                if(time < act_time){
+                    lb_left.setText(R.string.lv_overTime);
 
-             //   if(min == 60){
+                    if(min > act_min){
+
+                        if(min == 0 ){
+                            min = 60;
+                            hour = hour - 1;
+                        }
+                        act_min = min - act_min;
+                    }
+                    else{
+                        act_min = act_min - min;
+                    }
+                    act_hour = act_hour - hour;
+                    if(act_min == 60){
+                        act_min = 0;
+                        act_hour = act_hour + 1;
+                    }
+
+                }
+                else {
+                    lb_left.setText(R.string.lv_left);
+                    if (min == 0) {
+                        min = 60;
+                        hour = hour - 1;
+                    }
+
+                    //   if(min == 60){
                     act_min = min - act_min;
-           //     }
+                    //     }
 
-                act_hour = hour - act_hour + 1;
-                act_hour = act_hour * 100;
+                    act_hour = hour - act_hour + 1;
+                    act_hour = act_hour * 100;
 
-                act_time = act_hour + act_min;
 
-                time_lft = String.valueOf(act_time);
+                    act_time = act_hour + act_min;
 
-                int length_t = time_lft.length();
-                int half_t = length_t / 2;
+                    time_lft = String.valueOf(act_time);
 
-                String t1 = time_lft.substring(0, half_t);
-                String t2 = time_lft.substring(half_t, length_t);
+                    int length_t = time_lft.length();
+                    int half_t = length_t / 2;
 
-                act_hour = Integer.parseInt(t1);
-                act_min = Integer.parseInt(t2);
+                    t1 = time_lft.substring(0, half_t);
+                    t2 = time_lft.substring(half_t, length_t);
 
-                nd = false;
-                //Uhrzeiten richtig anzeigen
-                while(min >= 60){
-                    hour = hour + 1;
-                    min = min - 60;
-                }
-                while(hour >= 24) {
-                    hour2 = + 1;
-                    hour = hour - 1;
-                    if (hour == 24){
-                        hour = 0;
-                        nd = true;
+                    act_hour = Integer.parseInt(t1);
+                    act_min = Integer.parseInt(t2);
+
+                    nd = false;
+                    //Uhrzeiten richtig anzeigen
+                    while (min >= 60) {
+                        hour = hour + 1;
+                        min = min - 60;
                     }
-                }
-                hour2 = 0;
-                // Time LEft richtig anzeigen
-                act_hour = act_hour - 1;
-                while(act_min >= 60){
-                    act_hour = act_hour + 1;
-                    act_min = act_min - 60;
-                }
-                while(act_hour >= 24) {
-                    hour2 = + 1;
+                    while (hour >= 24) {
+                        hour2 = +1;
+                        hour = hour - 1;
+                        if (hour == 24) {
+                            hour = 0;
+                            nd = true;
+                        }
+                    }
+                    hour2 = 0;
+                    // Time LEft richtig anzeigen
                     act_hour = act_hour - 1;
-                    if (act_hour == 24){
-                        act_hour = 0;
-                        nd = true;
+                    while (act_min >= 60) {
+                        act_hour = act_hour + 1;
+                        act_min = act_min - 60;
                     }
+                    while (act_hour >= 24) {
+                        hour2 = +1;
+                        act_hour = act_hour - 1;
+                        if (act_hour == 24) {
+                            act_hour = 0;
+                            nd = true;
+                        }
+                    }
+
+                    next_day.setChecked(nd);
+
                 }
+                    time_lft = String.valueOf(act_time);
 
-                next_day.setChecked(nd);
+                    s2 = convert(min, 2); //fügt eine 0 hinzu, damit die Minuten immer 2 Stellen haben
+                    s1 = convert(hour, 2);
 
+                    t2 = convert(act_min, 2); //fügt eine 0 hinzu, damit die Minuten immer 2 Stellen haben
+                    t1 = convert(act_hour, 2);
 
-                time_lft = String.valueOf(act_time);
+                    arrival = s1 + ":" + s2;
+                    time_lft = t1 + ":" + t2;
+                    home_time.setText(arrival);
+                    time_left.setText(time_lft);
 
-                s2 = convert(min, 2); //fügt eine 0 hinzu, damit die Minuten immer 2 Stellen haben
-                s1 = convert(hour, 2);
-
-                t2 = convert(act_min, 2); //fügt eine 0 hinzu, damit die Minuten immer 2 Stellen haben
-                t1 = convert(act_hour, 2);
-
-                arrival = s1 + ":" + s2;
-                time_lft = t1 + ":" + t2;
-                home_time.setText(arrival);
-                time_left.setText(time_lft);
             }
         });
 
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+
+    }
+
     public String convert(int number, int digit) {
         String buffer = String.valueOf(number);
         while(buffer.length() != digit)
@@ -311,8 +354,8 @@ public class MyActivity extends Activity {
         startActivity(intent);
     }
 
-         /* Adding File Class
-    public int GetFileData(){
+
+    public int GetFileData(String FILENAME){
         FileInputStream fis;
 
         try {
@@ -325,9 +368,10 @@ public class MyActivity extends Activity {
             e.printStackTrace();
         }
         return s_week_hours;
-    }             */
-      /*
-    public void WriteFile(){
+    }
+
+    public void WriteFile(int iv_value, String FILENAME){
+        lv_value = iv_value;
         FileOutputStream fos;
         try {
             fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
@@ -338,8 +382,8 @@ public class MyActivity extends Activity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }     */
-    
+    }
+    /*
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -355,6 +399,7 @@ public class MyActivity extends Activity {
     private void closeDB() {
         myDB.close();
     }
+
 //TODO: https://www.youtube.com/watch?v=Aui-kFuXFYE
     private void addRowToDB(){
       //  long newID = myDB.insertRow();
@@ -365,5 +410,7 @@ public class MyActivity extends Activity {
         if(cursor.moveToFirst()){
             int id = cursor.getInt(0);
         }
+
     }
+    */
 }

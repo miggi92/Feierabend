@@ -12,6 +12,7 @@
     <string name="lb_pt">Pause</string>
     <string name="next_day">Nächster Tag?</string>
     <string name="lv_left">Zeit zu arbeiten</string>
+    <string name="lv_overTime">Überstunden</string>
     <string name="lb_week_h">Zur 40h Woche wechseln?</string>
     <string name="title_activity_menu">Menü</string>
 

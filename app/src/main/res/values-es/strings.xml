@@ -11,6 +11,7 @@
     <string name="sugg_arrv">08:00</string>
     <string name="sugg_ht">17:00</string>
     <string name="sugg_pause">01:00</string>
+    <string name="lv_overTime">Demasiado tiempo</string>
     <string name="lb_week_h">¿Cambiar a una semana de 40h?</string>
     <string name="title_activity_menu">Menú</string>
 
