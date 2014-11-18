@@ -1,30 +1,24 @@
 package com.ppr.feierabend;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 import static android.widget.ToggleButton.*;
 import static com.ppr.feierabend.R.id.switch1;
-import static java.lang.String.*;
 
 
 public class Menu extends Activity {
 
     private String FILENAME = "week_hours.txt";
-    private int file;
+    private int weekHours;
     private int s_40 = 40;
     private int s_38_5 = 38;
     private TextView txt1;
+    CL_FILE CLFILE;
 
 
 
@@ -34,53 +28,25 @@ public class Menu extends Activity {
         setContentView(R.layout.activity_menu);
 
         ToggleButton sw_week_h = (ToggleButton) findViewById(switch1);
-        FileInputStream fis;
 
-        try {
-            fis = openFileInput(FILENAME);
-            file = fis.read();
-            fis.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        weekHours = CLFILE.GetFileData(FILENAME);
 
-        if( file == s_40){
+        if( weekHours == s_40){
             sw_week_h.setChecked(true);
         }
         else{
-            if( file == s_38_5){
+            if( weekHours == s_38_5){
                 sw_week_h.setChecked(false);
             }
-
         }
         sw_week_h.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    FileOutputStream fos;
-                    try {
-                        fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
-                        fos.write(s_40);
-                        fos.close();
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    CLFILE.WriteFile(s_40,FILENAME);
 
                 } else {
-                    FileOutputStream fos;
-                    try {
-                        fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
-                        fos.write(s_38_5);
-                        fos.close();
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    CLFILE.WriteFile(s_38_5,FILENAME);
                 }
             }
         });

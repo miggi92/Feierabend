@@ -3,6 +3,7 @@ package com.ppr.feierabend;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,15 +17,16 @@ import android.widget.EditText;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.Calendar;
+import java.util.HashMap;
 
 
 public class MyActivity extends Activity {
+
     private EditText arrv_time;
     private EditText home_time;
     private EditText pause_time;
@@ -34,15 +36,51 @@ public class MyActivity extends Activity {
     private EditText time_left;
     private int s_week_hours;
     private String FILENAME = "week_hours.txt";
+    DBAdapter myDB;
+    CL_FILE CL_FILE;
+    // The following line should be changed to include the correct property id.
+    private static final String PROPERTY_ID = "UA-56135998-1";
+    //Logging TAG
+    private static final String TAG = "MyApp";
+    public static int GENERAL_TRACKER = 0;
+
+    public enum TrackerName {
+        APP_TRACKER, // Tracker used only in this app.
+        GLOBAL_TRACKER, // Tracker used by all the apps from a company. eg: roll-up tracking.
+        ECOMMERCE_TRACKER, // Tracker used by all ecommerce transactions from a company.
+    }
+    HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
 
     private static final String TEST_DEVICE_ID = "TEST_EMULATOR";
+    //Google Analytics
+    synchronized Tracker getTracker(TrackerName trackerId) {
+        if (!mTrackers.containsKey(trackerId)) {
+
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+            Tracker t = (trackerId == TrackerName.APP_TRACKER) ? analytics.newTracker(R.xml.app_tracker)
+                    : (trackerId == TrackerName.GLOBAL_TRACKER) ? analytics.newTracker(PROPERTY_ID)
+                    : analytics.newTracker(R.xml.ecommerce_tracker);
+            mTrackers.put(trackerId, t);
+
+        }
+        return mTrackers.get(trackerId);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         /** Called when the activity is first created. */
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
 
-            // The "loadAdOnCreate" and "testDevices" XML attributes no longer available.
+        //Get a Tracker (should auto-report)
+        Tracker t;       // Get tracker.
+        t = ((MyActivity) getApplication()).getTracker(
+                TrackerName.APP_TRACKER);
+        String ACTIVITY_NAME = "MyActivity";
+        t.setScreenName(ACTIVITY_NAME);     // Pass a String representing the screen name.
+        t.send(new HitBuilders.AppViewBuilder().build());       // Send a screen view.
+
+
+        // The "loadAdOnCreate" and "testDevices" XML attributes no longer available.
             AdView adView = (AdView) this.findViewById(R.id.adView);
             AdRequest adRequest = new AdRequest.Builder()
                     .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
@@ -62,12 +100,10 @@ public class MyActivity extends Activity {
         arrv_time.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
@@ -78,18 +114,16 @@ public class MyActivity extends Activity {
 
         button.setEnabled(false);
 
-
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-// hide Keyboard
+//*****hide Keyboard**********************************************************************
                 InputMethodManager inputManager = (InputMethodManager)
                         getSystemService(Context.INPUT_METHOD_SERVICE);
 
                 inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
                         InputMethodManager.HIDE_NOT_ALWAYS);
-
+//***************************************************************************************
                 String pause;
                 int time;
                 int hour;
@@ -108,11 +142,11 @@ public class MyActivity extends Activity {
                 Calendar c = Calendar.getInstance();
                 int day = c.get(Calendar.DAY_OF_WEEK);
 
-                GetFileData();
+                s_week_hours = CL_FILE.GetFileData(FILENAME);
                 //Falls Datei nicht vorhanden wieder eine schreiben und auslesen
                 if (s_week_hours == 0){
-                  WriteFile();
-                  GetFileData();
+                  CL_FILE.WriteFile(38, FILENAME);
+                  s_week_hours = CL_FILE.GetFileData(FILENAME);
                 }
 
                 if( s_week_hours == 40){
@@ -276,7 +310,9 @@ public class MyActivity extends Activity {
         Intent intent = new Intent(this, com.ppr.feierabend.Menu.class);
         startActivity(intent);
     }
-    private int GetFileData(){
+
+         /* Adding File Class
+    public int GetFileData(){
         FileInputStream fis;
 
         try {
@@ -289,9 +325,9 @@ public class MyActivity extends Activity {
             e.printStackTrace();
         }
         return s_week_hours;
-    }
-
-    private void WriteFile(){
+    }             */
+      /*
+    public void WriteFile(){
         FileOutputStream fos;
         try {
             fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
@@ -302,6 +338,32 @@ public class MyActivity extends Activity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }     */
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        closeDB();
     }
 
+    private void openDB(){
+        myDB = new DBAdapter(this);
+        myDB.open();
+
+    }
+    private void closeDB() {
+        myDB.close();
+    }
+//TODO: https://www.youtube.com/watch?v=Aui-kFuXFYE
+    private void addRowToDB(){
+      //  long newID = myDB.insertRow();
+    }
+ // Display an entire recordset to the screen.
+    private void displayRecordSet(Cursor cursor){
+        //Reset cursor to start, checking if there is any data:
+        if(cursor.moveToFirst()){
+            int id = cursor.getInt(0);
+        }
+    }
 }
