@@ -15,5 +15,14 @@
     <string name="lv_overTime">Over Time</string>
     <string name="title_activity_menu">Menu</string>
     <string name="lb_week_h">Change to 40h week?</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pick_time">Please pick a time</string>
+    <string name="title_activity_main">Main</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="appwidget_text">Home time Widget</string>
+    <string name="add_widget">Add widget</string>
+    <string name="TxtCalculator">Calculator</string>
+    <string name="settings">Settings</string>
+    <string name="db">Database</string>
 
 </resources>

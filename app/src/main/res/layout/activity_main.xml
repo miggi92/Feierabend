@@ -1,0 +1,40 @@
+<FrameLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="85dp"
+        android:text="New Button"
+        android:id="@+id/calculator"
+        android:drawableBottom="@drawable/ic_action_data_usage"
+        android:layout_gravity="left|center_vertical" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="85dp"
+        android:text="New Button"
+        android:drawableBottom="@drawable/ic_action_storage"
+        android:id="@+id/database"
+        android:layout_gravity="center" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="85dp"
+        android:text="New Button"
+        android:id="@+id/settings"
+        android:drawableBottom="@drawable/ic_action_settings"
+        android:layout_gravity="right|center_vertical" />
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-9924656620971762/7121096737"
+        android:layout_gravity="center_horizontal|bottom" />
+
+</FrameLayout>

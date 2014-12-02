@@ -1,9 +1,10 @@
 package com.ppr.feierabend;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,11 +16,12 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import java.io.FileInputStream;
@@ -27,11 +29,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 
 public class MyActivity extends Activity {
 
+    static final int dialog_id = 0;
+    int hour, minute;
     private EditText arrv_time;
     private EditText home_time;
     private EditText pause_time;
@@ -74,6 +79,7 @@ public class MyActivity extends Activity {
         /** Called when the activity is first created. */
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
+
 
         // Get tracker.
         Tracker t = (MyActivity.this.getTracker(
@@ -142,6 +148,16 @@ public class MyActivity extends Activity {
                 int act_hour;
                 int act_min;
                 String time_lft;
+                Date Arrival;
+
+                arrv_time.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        showDialog(dialog_id);
+                    }
+                });
+
 
                 Calendar c = Calendar.getInstance();
                 int day = c.get(Calendar.DAY_OF_WEEK);
@@ -166,6 +182,7 @@ public class MyActivity extends Activity {
                         break;
                 }
 
+        //        Arrival = new SimpleDateFormat("HH:mm").parse(arrv_time.getText());
                 act_hour = c.get(Calendar.HOUR_OF_DAY);
                 act_min = c.get(Calendar.MINUTE);
                 act_time = act_hour * 100 + act_min;
@@ -311,7 +328,25 @@ public class MyActivity extends Activity {
 
     }
 
-    @Override
+    protected Dialog onCreateDialog(int id){
+        switch (id){
+
+            case dialog_id:
+                return new TimePickerDialog(this, mTimeSetListener, hour, minute, true);
+        }
+        return null;
+    }
+
+    private TimePickerDialog.OnTimeSetListener mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+
+        @Override
+        public void onTimeSet(TimePicker view, int hourOfDay, int hour_minute) {
+            hour = hourOfDay;
+            minute = hour_minute;
+            Toast.makeText(getBaseContext(),"Setted time: " + hour + " : "+ minute, Toast.LENGTH_LONG).show();
+
+        }
+    };
     public void onStart() {
         super.onStart();
 
@@ -328,32 +363,6 @@ public class MyActivity extends Activity {
             buffer="0" + buffer;
         return buffer;
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.my, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            OpenSettings();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void OpenSettings() {
-        Intent intent = new Intent(this, com.ppr.feierabend.Menu.class);
-        startActivity(intent);
-    }
-
 
     public int GetFileData(String FILENAME){
         FileInputStream fis;

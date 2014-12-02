@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Date;
 
 import static android.widget.ToggleButton.*;
 import static com.ppr.feierabend.R.id.switch1;
@@ -43,6 +44,9 @@ public class Menu extends Activity {
         else{
             if( weekHours == s_38_5){
                 sw_week_h.setChecked(false);
+            }
+            else{
+                WriteFile(s_38_5, FILENAME);
             }
         }
         sw_week_h.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -78,7 +82,7 @@ public class Menu extends Activity {
         FileOutputStream fos;
         try {
             fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
-            fos.write(38);
+            fos.write(lv_value);
             fos.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -86,25 +90,4 @@ public class Menu extends Activity {
             e.printStackTrace();
         }
     }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(android.view.Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
 }
