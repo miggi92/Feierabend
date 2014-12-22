@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -48,8 +49,7 @@ public class MyActivity extends Activity {
     private int s_week_hours;
     private int lv_value;
     private String FILENAME = "week_hours.txt";
-    //TODO:implement DB
-   // DBAdapter myDB;
+
     // The following line should be changed to include the correct property id.
     private static final String PROPERTY_ID = "UA-56135998-1";
 
@@ -74,12 +74,12 @@ public class MyActivity extends Activity {
         }
         return mTrackers.get(trackerId);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         /** Called when the activity is first created. */
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
-
 
         // Get tracker.
         Tracker t = (MyActivity.this.getTracker(
@@ -392,34 +392,5 @@ public class MyActivity extends Activity {
             e.printStackTrace();
         }
     }
-    /*
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
 
-        closeDB();
-    }
-
-    private void openDB(){
-        myDB = new DBAdapter(this);
-        myDB.open();
-
-    }
-    private void closeDB() {
-        myDB.close();
-    }
-
-//TODO: https://www.youtube.com/watch?v=Aui-kFuXFYE
-    private void addRowToDB(){
-      //  long newID = myDB.insertRow();
-    }
- // Display an entire recordset to the screen.
-    private void displayRecordSet(Cursor cursor){
-        //Reset cursor to start, checking if there is any data:
-        if(cursor.moveToFirst()){
-            int id = cursor.getInt(0);
-        }
-
-    }
-    */
 }

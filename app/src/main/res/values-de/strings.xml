@@ -13,7 +13,17 @@
     <string name="next_day">Nächster Tag?</string>
     <string name="lv_left">Zeit zu arbeiten</string>
     <string name="lv_overTime">Überstunden</string>
-    <string name="lb_week_h">Zur 40h Woche wechseln?</string>
+    <string name="lb_week_h">Zur $h Woche wechseln?</string>
     <string name="title_activity_menu">Menü</string>
-
+    <string name="pick_time">Bitte wählen Sie eine Zeit aus</string>
+    <string name="title_activity_main">Main</string>
+    <string name="appwidget_text">Home time Widget</string>
+    <string name="add_widget">Add widget</string>
+    <string name="TxtCalculator">Rechner</string>
+    <string name="settings">Einstellungen</string>
+    <string name="db">Datenbank</string>
+    <string name="ToastWeekHours">Stunden in der Woche geändert zu: </string>
+    <string name="CheckIn">Einchecken</string>
+    <string name="CheckOut">Auschecken</string>
+    <string name="Pause">Pause</string>
 </resources>

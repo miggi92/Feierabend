@@ -23,6 +23,9 @@ public class Main extends Activity {
     private Button buttonCalc;
     private Button buttonSettings;
     private Button buttonDB;
+    private Button CheckIn;
+    private Button Pause;
+    private Button CheckOut;
 
     public enum TrackerName {
         APP_TRACKER, // Tracker used only in this app.
@@ -68,21 +71,26 @@ public class Main extends Activity {
         adView.loadAd(adRequest);
 
         buttonCalc = (Button) findViewById(R.id.calculator);
+        CheckIn = (Button) findViewById(R.id.CheckIn);
+        Pause = (Button) findViewById(R.id.Pause);
+        CheckOut = (Button) findViewById(R.id.CheckOut);
         buttonCalc.setText(R.string.TxtCalculator);
+        CheckIn.setText(R.string.CheckIn);
+        Pause.setText(R.string.Pause);
+        CheckOut.setText(R.string.CheckOut);
         buttonCalc.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(getBaseContext(), "Clicked on Calculator Button", Toast.LENGTH_LONG).show();
                 OpenCalculator();
             }
         });
 
         buttonDB = (Button) findViewById(R.id.database);
         buttonDB.setText(R.string.db);
-        //TODO: delete next line when DB is implemented
+
         buttonDB.setEnabled(false);
-        //TODO.
+
         buttonDB.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -96,7 +104,6 @@ public class Main extends Activity {
         buttonSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getBaseContext(), "Clicked on the Settings Button", Toast.LENGTH_LONG).show();
                 OpenSettings();
             }
         });
